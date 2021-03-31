@@ -1,6 +1,6 @@
 package com.daenis.messaging.controller;
 
-import com.daenis.messaging.service.MessagingService;
+import com.daenis.messaging.core.shared.MessageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,32 +15,32 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 public class MessagingControllerTest {
 
-    private Message message;
+    private ClientMessage clientMessage;
 
     @Mock
-    private MessagingService service;
+    private MessageService service;
 
     private MessagingController messagingController;
 
     @BeforeEach
     void init() {
-        message = new Message();
+        clientMessage = new ClientMessage();
 
         messagingController = new MessagingController(service);
     }
 
     @Test
     void shouldSendMessage() {
-        messagingController.sendMessage(message);
+        messagingController.sendMessage(clientMessage);
 
-        verify(service, times(1)).sendMessage(message);
+        verify(service, times(1)).sendMessage(clientMessage);
     }
 
     @Test
     void shouldReturnSuccessfulResponseAfterSendingMessage() {
         ResponseEntity<?> predictedResponse = ResponseEntity.ok().build();
 
-        ResponseEntity<?> returnedResponse = messagingController.sendMessage(message);
+        ResponseEntity<?> returnedResponse = messagingController.sendMessage(clientMessage);
 
         assertThat(returnedResponse).isEqualTo(predictedResponse);
     }
