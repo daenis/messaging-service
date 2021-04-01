@@ -31,7 +31,7 @@ public class EmailService implements MessageService {
         sender.send(theEmail);
     }
 
-    MessagingErrorException anExceptionFor(Message theMessage) {
-        return new MessagingErrorException("There was an error while sending a message to " + theMessage.getRecipient() + " with subject: " + theMessage.getSubject());
+    RuntimeException anExceptionFor(Message theMessage) {
+        return new RuntimeException("There was an error while sending a message to " + theMessage.getRecipient() + " with subject: " + theMessage.getSubject());
     }
 }

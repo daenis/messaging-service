@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-// TODO: test
 @Component
 @RequiredArgsConstructor
 public class EmailMapper {

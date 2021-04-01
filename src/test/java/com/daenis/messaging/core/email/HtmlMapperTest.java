@@ -6,13 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +21,7 @@ class HtmlMapperTest {
     private String html;
 
     @Mock
-    private SpringTemplateEngine thymeleafTemplateEngine;
+    private ITemplateEngine iTemplateEngine;
 
     private Context context;
     private HtmlMapper htmlMapper;
@@ -41,16 +38,14 @@ class HtmlMapperTest {
         html = "<h1>Some Body</h1>";
 
         context = new Context();
-        htmlMapper = new HtmlMapper(thymeleafTemplateEngine) {
+        htmlMapper = new HtmlMapper(iTemplateEngine) {
             @Override Context getNewContext() { return context; }
         };
     }
 
-    // TODO: Why is the thymeleafTemplateEngine null?
     @Test
     void shouldReturnAnHtmlStringForTheProvidedMessage() {
-        when(thymeleafTemplateEngine
-                .process("email-template.html", context)).thenReturn(html);
+        when(iTemplateEngine.process("email-template.html", context)).thenReturn(html);
 
         String returnedHtml = htmlMapper.getHtmlBodyFromMessage(message);
 
@@ -59,6 +54,8 @@ class HtmlMapperTest {
 
     @Test
     void shouldSetTheVariablesInTheHtml() {
+        htmlMapper.getHtmlBodyFromMessage(message);
 
+        assertThat(context.getVariable("text")).isEqualTo(body);
     }
 }

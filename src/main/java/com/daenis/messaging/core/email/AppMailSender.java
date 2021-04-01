@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
 
-// TODO: test
 @Service
 @RequiredArgsConstructor
-public class MailSender implements MessageFactory, EmailSender {
+public class AppMailSender implements MessageFactory, EmailSender {
 
     private final JavaMailSender javaMailSender;
 

@@ -64,7 +64,7 @@ class EmailServiceTest {
 
         when(mapper.getEmailForMessage(message)).thenThrow(new MessagingException());
 
-        MessagingErrorException thrown = assertThrows(MessagingErrorException.class, () -> emailService.sendMessage(message));
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> emailService.sendMessage(message));
 
         assertThat(thrown.getMessage()).isEqualTo(predictedMessage);
     }
