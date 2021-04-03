@@ -1,7 +1,7 @@
 .idea/
 target/
 *.iml
-resources/application.properties
+src/main/resources/application.properties
 
 
 
